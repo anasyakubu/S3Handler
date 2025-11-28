@@ -6,29 +6,19 @@ const s3Service = new S3Service();
 
 export class S3Controller {
   async healthCheck(req: Request, res: CustomResponse) {
-    res.json({
-      success: true,
-      message: 'S3 API is running',
-      data: { status: 'OK' }
-    });
+    res.json({ success: true, message: 'S3 API is running', data: { status: 'OK' } });
   }
 
   async createBucket(req: Request, res: CustomResponse) {
     try {
       const { bucketName } = req.body;
       if (!bucketName) {
-        return res.status(400).json({
-          success: false,
-          error: 'bucketName is required'
-        });
+        return res.status(400).json({ success: false, error: 'bucketName is required' });
       }
       const result = await s3Service.createBucket(bucketName);
       res.json({ success: true, data: result });
     } catch (error: any) {
-      res.status(500).json({
-        success: false,
-        error: error.message
-      });
+      res.status(500).json({ success: false, error: error.message });
     }
   }
 
